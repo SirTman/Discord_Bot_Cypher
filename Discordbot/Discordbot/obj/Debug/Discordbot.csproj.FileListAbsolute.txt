@@ -36,3 +36,26 @@ C:\Users\dee\Documents\GitHub\Discord_Bot_WV Cypher\Discordbot\Discordbot\bin\De
 C:\Users\dee\Documents\GitHub\Discord_Bot_WV Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Concurrent.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_WV Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Enlightenment.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_WV Cypher\Discordbot\Discordbot\bin\Debug\RestSharp.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.exe.config
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.exe
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.pdb
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.exe
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.pdb
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.Commands.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Newtonsoft.Json.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Concurrent.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Enlightenment.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\RestSharp.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\WebSocket4Net.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Newtonsoft.Json.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Concurrent.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Enlightenment.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\RestSharp.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.csprojResolveAssemblyReference.cache
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.Audio.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.Modules.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Concentus.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Concentus.xml

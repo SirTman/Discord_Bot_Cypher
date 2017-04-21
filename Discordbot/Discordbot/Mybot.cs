@@ -1,11 +1,25 @@
-﻿using Discord;
+﻿//Discord
+using Discord;
 using Discord.Commands;
+using Discord.Audio;
+using Discord.Modules;
+//System Stuff
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+//Aditional Stuff
+using Concentus;
 
+/*Tman's Cyhper Bot
++Ping           Test to see if she is online
++Say Hello      Will introduce self
++RNG            Random Number Genrator between 1-100
++D20            Rolls a d20
+*/
 namespace Discordbot
 {
     /*
@@ -61,12 +75,11 @@ namespace Discordbot
 
     */
 
-
-
     class Mybot
     {
         DiscordClient discord;
         CommandService commands;
+        IAudioClient vc;
 
         public Mybot()
         {
@@ -87,22 +100,29 @@ namespace Discordbot
                 x.AllowMentionPrefix = true;
             });
             commands = discord.GetService<CommandService>();
+           
+            // Opens an AudioConfigBuilder so we can configure our AudioService
+            // Tells the AudioService that we will only be sending audio
+            discord.UsingAudio(x => 
+            {
+                x.Mode = AudioMode.Outgoing;
+            });
+
 
             //Commands Classes go here
             Ping();
-            RefisterDMGGenCommand();
+            RefisterRNDGenCommand();
             Sayhello();
             d20();
-
-
+            JoinVC();
+            MoveVC();
 
             //Stuff used to connect it to the server
             discord.ExecuteAndWait(async () =>
             {
+
                 await discord.Connect("MzAzNzg2NjE1NzkxMjg4MzIw.C9eXIA.PCTqVlEQjnjleHr7Nvh8g9QbA5U", TokenType.Bot);
             });
-
-
         }
        
         
@@ -118,18 +138,19 @@ namespace Discordbot
         //say hello
         private void Sayhello()
         {
+
             commands.CreateCommand("Say Hello").Do(async (e) =>
             {
                 await e.Channel.SendMessage("Hello @everyone I'm @Cypher#1556");
             });
         }
         //Roll a radom number
-        private void RefisterDMGGenCommand()
+        private void RefisterRNDGenCommand()
         {
-            commands.CreateCommand("ATK").Do(async (e) =>
+            commands.CreateCommand("RNG").Do(async (e) =>
                 {
                     Random rnd = new Random();
-                    var dmgvalue = rnd.Next(1, 50);
+                    var dmgvalue = rnd.Next(1, 100);
                     string DMG = dmgvalue.ToString();
                     await e.Channel.SendMessage(DMG);
 
@@ -141,11 +162,33 @@ namespace Discordbot
             commands.CreateCommand("d20").Do(async (e) =>
             {
                 Random rnd = new Random();
-                var dmgvalue = rnd.Next(1, 50);
+                var dmgvalue = rnd.Next(1, 20);
                 string DMG = dmgvalue.ToString();
                 await e.Channel.SendMessage(DMG);
 
             });
+        }
+
+        //aduiso
+        private void JoinVC()
+        {
+            commands.CreateCommand("Join")
+                .Do(async (e) =>
+            {
+                var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
+                var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
+                    .Join(voiceChannel);
+
+            });
+        }
+        private void MoveVC()
+        {
+            commands.CreateCommand("Move")
+                .Parameter("Channel", ParameterType.Required)
+                .Do(async (e) =>
+                {
+                    await e.Channel.SendMessage("Joined " + e.GetArg("Channel"));
+                });
         }
 
         //End
