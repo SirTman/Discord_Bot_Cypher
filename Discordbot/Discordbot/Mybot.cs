@@ -107,9 +107,11 @@ namespace Discordbot
             discord.UsingAudio(x => 
             {
                 x.Mode = AudioMode.Outgoing;
-                
             });
+            var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
 
+            var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
+                    .Join(voiceChannel);
 
             //Commands Classes go here
             Ping();
