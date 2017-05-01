@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.IO;
 //Aditional Stuff
 using Concentus;
+using Sodium;
 
 /*Tman's Cyhper Bot
 +Ping           Test to see if she is online
@@ -111,13 +112,17 @@ namespace Discordbot
             {
                 x.Mode = AudioMode.Outgoing;
             });
+            var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
 
+            var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
+                    .Join(voiceChannel);
 
             //Commands Classes go here
             Ping();
             RefisterRNDGenCommand();
             Sayhello();
             d20();
+
             JoinVC();
             MoveVC();
 
@@ -177,12 +182,10 @@ namespace Discordbot
         {
             commands.CreateCommand("Join")
                 .Do(async (e) =>
-            {
-                var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
-                var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-                    .Join(voiceChannel);
-
-            });
+                {
+                    await e.Channel.SendMessage("```Joining masta!```");
+                    await discord.GetService<AudioService>().Join(discord.FindServers("The Lobby").FirstOrDefault().VoiceChannels.FirstOrDefault());
+                });
         }
         private void MoveVC()
         {
@@ -202,3 +205,5 @@ namespace Discordbot
 
     }
 }
+
+
