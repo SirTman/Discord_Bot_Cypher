@@ -1,8 +1,12 @@
 ﻿//Discord
 using Discord;
 using Discord.Commands;
+using Discord.Commands.Permissions.Levels;
+
 using Discord.Audio;
+
 using Discord.Modules;
+
 //System Stuff
 using System;
 using System.Collections.Generic;
@@ -125,7 +129,6 @@ namespace Discordbot
             //Stuff used to connect it to the server
             discord.ExecuteAndWait(async () =>
             {
-
                 await discord.Connect("MzAzNzg2NjE1NzkxMjg4MzIw.C9eXIA.PCTqVlEQjnjleHr7Nvh8g9QbA5U", TokenType.Bot);
             });
         }
