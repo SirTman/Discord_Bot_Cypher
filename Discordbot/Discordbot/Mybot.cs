@@ -108,17 +108,17 @@ namespace Discordbot
             {
                 x.Mode = AudioMode.Outgoing;
             });
-            var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
+            //var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
 
-            var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-                    .Join(voiceChannel);
+           // var _vClient = discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
+                    //.Join(voiceChannel);
 
             //Commands Classes go here
             Ping();
             RefisterRNDGenCommand();
             Sayhello();
             d20();
-
+            Help();
             JoinVC();
             MoveVC();
 
@@ -129,10 +129,18 @@ namespace Discordbot
                 await discord.Connect("MzAzNzg2NjE1NzkxMjg4MzIw.C9eXIA.PCTqVlEQjnjleHr7Nvh8g9QbA5U", TokenType.Bot);
             });
         }
-       
-        
+
+
         //Commands
         //Check if the bot is online
+        private void Help()
+        {
+            commands.CreateCommand("Help").Do(async (e) =>
+            {
+                await e.Channel.SendMessage("```Saddly Tman hasn't given me anything good to do so I can't help```");
+            });
+        }
+
         private void Ping()
         {
             commands.CreateCommand("Ping") .Do(async (e) =>
