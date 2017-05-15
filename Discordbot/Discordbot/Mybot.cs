@@ -15,9 +15,7 @@ using Sodium;
 using Discord;
 using Discord.Commands;
 using Discord.Commands.Permissions.Levels;
-
 using Discord.Audio;
-
 using Discord.Modules;
 
 
@@ -30,25 +28,22 @@ using Discord.Modules;
 
 namespace Discordbot
 {
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
+
     class Mybot
     {
         DiscordClient discord;
         CommandService commands;
-<<<<<<< HEAD
-=======
-        IAudioClient vc;
+
         public string CONT = "```";
         // CONT + "Text" + CONT
->>>>>>> origin/master
+
 
         public Mybot()
         {
             discord = new DiscordClient(x =>
             {
+                x.AppName = "Cypher";
                 x.LogLevel = LogSeverity.Debug;
                 x.LogHandler = Log;
             });
@@ -58,41 +53,24 @@ namespace Discordbot
             {
                 x.PrefixChar = '+';
                 x.AllowMentionPrefix = true;
+                x.HelpMode = HelpMode.Public;
             });
             commands = discord.GetService<CommandService>();
 
-<<<<<<< HEAD
+
             discord.UsingAudio(x => 
             {
                 x.Mode = AudioMode.Outgoing;
             
 
             });
-=======
-            // Opens an AudioConfigBuilder so we can configure our AudioService
-            // Tells the AudioService that we will only be sending audio
-           
-            discord.UsingAudio(x => 
-            {
-                x.Mode = AudioMode.Outgoing;
-            });
-            //var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
-
-           // var _vClient = discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-                    //.Join(voiceChannel);
->>>>>>> origin/master
-
             //Commands Classes go here
             Ping();
             RefisterRNDGenCommand();
             Sayhello();
-            d20();
-<<<<<<< HEAD
-=======
-            Help();
->>>>>>> origin/master
             JoinVC();
-    
+
+            Destroy();
 
             WelcomeNLeave();
 
@@ -104,20 +82,13 @@ namespace Discordbot
             });
         }
 
-
         //Commands
         //Check if the bot is online
-        private void Help()
-        {
-            commands.CreateCommand("Help").Do(async (e) =>
-            {
-                await e.Channel.SendMessage("```Saddly Tman hasn't given me anything good to do so I can't help```");
-            });
-        }
-
         private void Ping()
         {
-            commands.CreateCommand("Ping") .Do(async (e) =>
+            commands.CreateCommand("Ping")
+                .Description("Used to see if i'm online and working")
+                .Do(async (e) =>
             {
                  await e.Channel.SendMessage("```Hiya~ I'm online.```");
             });
@@ -126,7 +97,9 @@ namespace Discordbot
         private void Sayhello()
         {
 
-            commands.CreateCommand("Say Hello").Do(async (e) =>
+            commands.CreateCommand("Say Hello")
+                .Description("I'll say hello to everyone")
+                .Do(async (e) =>
             {
                 await e.Channel.SendMessage("Hello @everyone I'm @Cypher#1556");
             });
@@ -134,28 +107,35 @@ namespace Discordbot
         //Roll a radom number
         private void RefisterRNDGenCommand()
         {
-            commands.CreateCommand("RNG").Do(async (e) =>
+            commands.CreateCommand("RNG")
+                .Parameter("Num", ParameterType.Optional)
+                .Description("Roll a random number between 1 and a number. Defalt is 10")
+                .Do(async (e) =>
                 {
-                    Random rnd = new Random();
-                    var dmgvalue = rnd.Next(1, 100);
-                    string DMG = dmgvalue.ToString();
-                    await e.Channel.SendMessage(DMG);
+                    int MaxCap = 10;
+                    if (Int32.TryParse(e.GetArg("Num"), out MaxCap))
+                    {
+                        Random rnd = new Random();
+                        var dmgvalue = rnd.Next(1, MaxCap);
+                        string DMG = dmgvalue.ToString();
+                        await e.Channel.SendMessage(CONT + DMG + CONT);
+                    }
+                    //Failed
+                    else if (e.GetArg("Num") != " ")
+                    {
+                        Random rnd = new Random();
+                        var dmgvalue = rnd.Next(1, MaxCap);
+                        string DMG = dmgvalue.ToString();
+                        await e.Channel.SendMessage(CONT + DMG + CONT);
+                    }
+                    else
+                    {
+                        await e.Channel.SendMessage("```" + e.GetArg("Num") + " Isn't vaild number```");
+                    }
+
 
                 });
         }
-        //Roll a radom number
-        private void d20()
-        {
-            commands.CreateCommand("d20").Do(async (e) =>
-            {
-                Random rnd = new Random();
-                var dmgvalue = rnd.Next(1, 20);
-                string DMG = dmgvalue.ToString();
-                await e.Channel.SendMessage(DMG);
-
-            });
-        }
-
         private void WelcomeNLeave()
         {
             //Join
@@ -178,37 +158,86 @@ namespace Discordbot
 
         }
 
+        public void Destroy()
+        {
+            commands.CreateCommand("Delete")
+            .Description("Cypher will mass delete messages!!")
+            .Parameter("DeleteAmount",ParameterType.Optional)
+            .Do(async (e) =>
+            {
+                //Stuff
+                await e.Channel.SendIsTyping();
+                var userPermissions = e.User.GetPermissions(e.Channel).ManageMessages;
+                int number;
+                
+                //Converter
+                if (Int32.TryParse(e.GetArg("DeleteAmount"), out number)) { }
+                else if (e.GetArg("DeleteAmount") != " ") { number = 1; }
+                else { await e.Channel.SendMessage("```" + e.GetArg("DeleteAmount") + " Isn't vaild number```"); }
+
+                Message[] message = new Message[number];
+                message = e.Channel.DownloadMessages(number).Result;
+                if (userPermissions == true)
+                {
+                    await e.Channel.SendMessage(CONT + "Mwhaha!!\nYes Master. It won't take me more than a single Pokemon to delete them." + CONT);
+                    System.Threading.Thread.Sleep(3000);
+                    await e.Channel.SendIsTyping();
+                    //Check
+                    try
+                    {
+                        await e.Channel.DeleteMessages(message);
+                        if (e.User.Id == 187456924894232585)
+                        {
+                            await e.Channel.SendMessage(CONT + "All " + number + " Foe's have been eliminated, Master Tman" + CONT);
+                        }
+                        else
+                        {
+                            await e.Channel.SendMessage(CONT + "All " + number + " Foe's have been eliminated" + CONT);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message != "The server responded with error 404 (NotFound): \"Unknown Message\"")
+                            await e.Channel.SendMessage(CONT + "Wait I don't have access to that!!!" + CONT);
+                    }
+                   
+                   
+
+                }
+                else
+                {
+                    Console.WriteLine(CONT + "Woah! This is urlawful access at a command that could can this whole opration.\nUnless your my master or commander``` ```Back off!" + CONT);
+                }
+
+            });
+        }
+
         //aduiso
         private void JoinVC()
         {
             commands.CreateCommand("Join")
+                .Description("Used for Voice [WIP]")
                 .Do(async (e) =>
                 {
-<<<<<<< HEAD
-                    var CommandExicutor = e.User.VoiceChannel;
-
-                    // var voiceChannel = discord.FindServers(CommandExicutor).FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
                     try
                     {
-                        await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-                                .Join(CommandExicutor); // Join the Voice Channel, and return the IAudioClient.
-                        await e.Channel.SendMessage("Bro i'm comming calm your tits");
+                        var server = e.Server.Name;
+                        var voiceChannel = discord.FindServers(server).FirstOrDefault().VoiceChannels.FirstOrDefault();
+
+                        await e.Channel.SendMessage("Joining " + voiceChannel + "!");
+                        await discord.GetService<AudioService>()
+                        .Join(voiceChannel);
+                        await e.Channel.SendMessage("Joined " + voiceChannel + "!");
                     }
                     catch(InvalidOperationException)
                     {
                         await e.Channel.SendMessage("Well that didn't work?");
                     }
-                    
-=======
-                    var server = e.Server.Name;
-                    var voiceChannel = discord.FindServers(server).FirstOrDefault().VoiceChannels.FirstOrDefault();
 
-                    await e.Channel.SendMessage("Joining " + voiceChannel + "!");
-                    await discord.GetService<AudioService>()
-                    .Join(voiceChannel);
 
-                    await e.Channel.SendMessage("Joined " + voiceChannel + "!");
->>>>>>> origin/master
+                  
+
+
                 });
         }
         public void SendAudio(string pathOrUrl)
