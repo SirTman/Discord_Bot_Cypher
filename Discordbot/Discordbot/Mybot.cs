@@ -1,12 +1,4 @@
-﻿//Discord
-using Discord;
-using Discord.Commands;
-using Discord.Commands.Permissions.Levels;
-
-using Discord.Audio;
-
-using Discord.Modules;
-
+﻿
 //System Stuff
 using System;
 using System.Collections.Generic;
@@ -19,82 +11,36 @@ using System.IO;
 using Concentus;
 using Sodium;
 
+//Discord
+using Discord;
+using Discord.Commands;
+using Discord.Commands.Permissions.Levels;
+
+using Discord.Audio;
+
+using Discord.Modules;
+
+
 /*Tman's Cyhper Bot
 +Ping           Test to see if she is online
 +Say Hello      Will introduce self
 +RNG            Random Number Genrator between 1-100
 +D20            Rolls a d20
 */
+
 namespace Discordbot
 {
-    /*
-    class StatusEffects
-    {
-        private StatusEffects()
-        {
-            string S_Name = "";
-            string Type = "";//::Type
-            float EffectMul = 1.0F;//(x1.0)
-            bool haseffect = false;
-            int Turncounter = 1;//[1]
-            int Buffer = 0; //{1}
-            
-
-        }
-    }
-
-    class Fighter
-    {
-        public Fighter()
-        {
-            string F_Name = "";
-            bool Player = false;
-            bool Alive = false;
-            int HP = 100;
-            StatusEffects[] CE = new StatusEffects[10];
-            //Dodge table
-            if (Player == true)
-            {
-                int MaxDodgeNum = 10;
-                int NumNeededToDodge = 5;
-            }
-            else
-            {
-                int MaxDodgeNum = 5;
-                int NumNeededToDodge = 3;
-            }
-        }
-        public Fighter(Fighter[] List, string a_name, bool a_player, int a_health)
-        {
-            for (int i = 0; i >= 100; i++)
-            {
-
-                if (List[i].Alive == true)
-                {
-                    continue;
-                }
-            }
-
-        }
-    }
-
-    */
-
+    
     class Mybot
     {
         DiscordClient discord;
         CommandService commands;
-        IAudioClient vc;
 
         public Mybot()
         {
-            //Command exicution
-           // bool Fight = false;
-           // Fighter[] RosterList = new Fighter[100];
-
             discord = new DiscordClient(x =>
             {
-                x.LogLevel = LogSeverity.Info;
+                x.LogLevel = LogSeverity.Debug;
                 x.LogHandler = Log;
             });
             
@@ -105,31 +51,27 @@ namespace Discordbot
                 x.AllowMentionPrefix = true;
             });
             commands = discord.GetService<CommandService>();
-           
-            // Opens an AudioConfigBuilder so we can configure our AudioService
-            // Tells the AudioService that we will only be sending audio
+
             discord.UsingAudio(x => 
             {
                 x.Mode = AudioMode.Outgoing;
-            });
-            var voiceChannel = discord.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
+            
 
-            var _vClient = await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-                    .Join(voiceChannel);
+            });
 
             //Commands Classes go here
             Ping();
             RefisterRNDGenCommand();
             Sayhello();
             d20();
-
             JoinVC();
-            MoveVC();
+    
 
             //Stuff used to connect it to the server
             discord.ExecuteAndWait(async () =>
             {
                 await discord.Connect("MzAzNzg2NjE1NzkxMjg4MzIw.C9eXIA.PCTqVlEQjnjleHr7Nvh8g9QbA5U", TokenType.Bot);
+                await Task.Delay(TimeSpan.FromSeconds(4));
             });
         }
        
@@ -183,18 +125,25 @@ namespace Discordbot
             commands.CreateCommand("Join")
                 .Do(async (e) =>
                 {
-                    await e.Channel.SendMessage("```Joining masta!```");
-                    await discord.GetService<AudioService>().Join(discord.FindServers("The Lobby").FirstOrDefault().VoiceChannels.FirstOrDefault());
+                    var CommandExicutor = e.User.VoiceChannel;
+
+                    // var voiceChannel = discord.FindServers(CommandExicutor).FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
+                    try
+                    {
+                        await discord.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
+                                .Join(CommandExicutor); // Join the Voice Channel, and return the IAudioClient.
+                        await e.Channel.SendMessage("Bro i'm comming calm your tits");
+                    }
+                    catch(InvalidOperationException)
+                    {
+                        await e.Channel.SendMessage("Well that didn't work?");
+                    }
+                    
                 });
         }
-        private void MoveVC()
+        public void SendAudio(string pathOrUrl)
         {
-            commands.CreateCommand("Move")
-                .Parameter("Channel", ParameterType.Required)
-                .Do(async (e) =>
-                {
-                    await e.Channel.SendMessage("Joined " + e.GetArg("Channel"));
-                });
+            
         }
 
         //End

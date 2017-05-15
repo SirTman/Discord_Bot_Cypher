@@ -83,3 +83,10 @@ L:\Github\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Enligh
 L:\Github\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\RestSharp.xml
 L:\Github\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.csprojResolveAssemblyReference.cache
 L:\Github\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Sodium.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Sodium.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml
