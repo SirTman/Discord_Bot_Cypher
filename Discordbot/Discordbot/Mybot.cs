@@ -54,9 +54,10 @@ namespace Discordbot
                 x.AllowMentionPrefix = true;
             });
             commands = discord.GetService<CommandService>();
-           
+
             // Opens an AudioConfigBuilder so we can configure our AudioService
             // Tells the AudioService that we will only be sending audio
+           
             discord.UsingAudio(x => 
             {
                 x.Mode = AudioMode.Outgoing;
@@ -164,8 +165,14 @@ namespace Discordbot
             commands.CreateCommand("Join")
                 .Do(async (e) =>
                 {
-                    await e.Channel.SendMessage("```Joining masta!```");
-                    await discord.GetService<AudioService>().Join(discord.FindServers("The Lobby").FirstOrDefault().VoiceChannels.FirstOrDefault());
+                    var server = e.Server.Name;
+                    var voiceChannel = discord.FindServers(server).FirstOrDefault().VoiceChannels.FirstOrDefault();
+
+                    await e.Channel.SendMessage("Joining " + voiceChannel + "!");
+                    await discord.GetService<AudioService>()
+                    .Join(voiceChannel);
+
+                    await e.Channel.SendMessage("Joined " + voiceChannel + "!");
                 });
         }
         private void MoveVC()
