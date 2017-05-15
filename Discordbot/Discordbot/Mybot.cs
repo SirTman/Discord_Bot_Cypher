@@ -27,64 +27,13 @@ using Sodium;
 */
 namespace Discordbot
 {
-    /*
-    class StatusEffects
-    {
-        private StatusEffects()
-        {
-            string S_Name = "";
-            string Type = "";//::Type
-            float EffectMul = 1.0F;//(x1.0)
-            bool haseffect = false;
-            int Turncounter = 1;//[1]
-            int Buffer = 0; //{1}
-            
-
-        }
-    }
-
-    class Fighter
-    {
-        public Fighter()
-        {
-            string F_Name = "";
-            bool Player = false;
-            bool Alive = false;
-            int HP = 100;
-            StatusEffects[] CE = new StatusEffects[10];
-            //Dodge table
-            if (Player == true)
-            {
-                int MaxDodgeNum = 10;
-                int NumNeededToDodge = 5;
-            }
-            else
-            {
-                int MaxDodgeNum = 5;
-                int NumNeededToDodge = 3;
-            }
-        }
-        public Fighter(Fighter[] List, string a_name, bool a_player, int a_health)
-        {
-            for (int i = 0; i >= 100; i++)
-            {
-
-                if (List[i].Alive == true)
-                {
-                    continue;
-                }
-            }
-
-        }
-    }
-
-    */
-
     class Mybot
     {
         DiscordClient discord;
         CommandService commands;
         IAudioClient vc;
+        public string CONT = "```";
+        // CONT + "Text" + CONT
 
         public Mybot()
         {
@@ -94,7 +43,7 @@ namespace Discordbot
 
             discord = new DiscordClient(x =>
             {
-                x.LogLevel = LogSeverity.Info;
+                x.LogLevel = LogSeverity.Debug;
                 x.LogHandler = Log;
             });
             
@@ -125,6 +74,8 @@ namespace Discordbot
             Help();
             JoinVC();
             MoveVC();
+
+            WelcomeNLeave();
 
             //Stuff used to connect it to the server
             discord.ExecuteAndWait(async () =>
@@ -183,6 +134,28 @@ namespace Discordbot
                 await e.Channel.SendMessage(DMG);
 
             });
+        }
+
+        private void WelcomeNLeave()
+        {
+            //Join
+            discord.UserJoined += async (s, e) =>
+            {
+                var channel = e.Server.DefaultChannel;
+                var server = e.Server.Name;
+                var user = e.User.Mention;
+                await channel.SendMessage(string.Format("Welcome " + user + " to " + server));
+            };
+
+            discord.UserLeft += async (s, e) =>
+            {
+                var channel = e.Server.DefaultChannel;
+                var server = e.Server.Name;
+                var user = e.User.Mention;
+                //var user = e.User.Name;
+                await channel.SendMessage(string.Format(user + " has removed herself from the server!"));
+            };
+
         }
 
         //aduiso
