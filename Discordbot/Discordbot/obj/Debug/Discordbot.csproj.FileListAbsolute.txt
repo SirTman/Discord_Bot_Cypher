@@ -63,7 +63,6 @@ L:\Github\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Sodium.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.exe.config
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.exe
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discordbot.pdb
-C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Concentus.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.Audio.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.Commands.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Discord.Net.dll
@@ -78,12 +77,10 @@ C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Nito.AsyncEx.Enlightenment.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\RestSharp.dll
-C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Sodium.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\System.Collections.Immutable.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\System.Interactive.Async.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\WebSocket4Net.dll
-C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Concentus.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\Microsoft.Threading.Tasks.xml
@@ -98,3 +95,4 @@ C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\bin\Debug\System.Interactive.Async.xml
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.exe
 C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.pdb
+C:\Users\dee\Documents\GitHub\Discord_Bot_Cypher\Discordbot\Discordbot\obj\Debug\Discordbot.csprojResolveAssemblyReference.cache

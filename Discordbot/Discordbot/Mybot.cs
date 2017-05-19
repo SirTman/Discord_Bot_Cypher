@@ -7,9 +7,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
-//Aditional Stuff
-using Concentus;
-using Sodium;
 
 //Discord
 using Discord;
@@ -17,6 +14,7 @@ using Discord.Commands;
 using Discord.Commands.Permissions.Levels;
 using Discord.Audio;
 using Discord.Modules;
+
 
 
 /*Tman's Cyhper Bot
@@ -34,10 +32,11 @@ namespace Discordbot
     {
         DiscordClient discord;
         CommandService commands;
+        AudioService audio;
 
         public string CONT = "```";
         // CONT + "Text" + CONT
-
+       
 
         public Mybot()
         {
@@ -48,7 +47,8 @@ namespace Discordbot
                 x.LogHandler = Log;
             });
             
-            //Call Initialiser
+            ///Call Initialiser
+            //Commands
             discord.UsingCommands(x => 
             {
                 x.PrefixChar = '+';
@@ -57,24 +57,31 @@ namespace Discordbot
             });
             commands = discord.GetService<CommandService>();
 
-
+            //Audio
             discord.UsingAudio(x => 
             {
                 x.Mode = AudioMode.Outgoing;
-            
-
+                x.EnableEncryption = true;
+                x.Bitrate = AudioServiceConfig.MaxBitrate;
+                x.BufferLength = 10000;
             });
-            //Commands Classes go here
+            audio = discord.GetService<AudioService>();
+
+            ///Commands & Functions
+            //Commands
             Ping();
             RefisterRNDGenCommand();
             Sayhello();
-            JoinVC();
-
             Destroy();
 
+            //Voice
+            JoinVC();
+            LeaveVC();
+            
+            //Functions
             WelcomeNLeave();
 
-            //Stuff used to connect it to the server
+            ///Stuff used to connect it to the server
             discord.ExecuteAndWait(async () =>
             {
                 await discord.Connect("MzAzNzg2NjE1NzkxMjg4MzIw.C9eXIA.PCTqVlEQjnjleHr7Nvh8g9QbA5U", TokenType.Bot);
@@ -82,7 +89,7 @@ namespace Discordbot
             });
         }
 
-        //Commands
+        ///Command & Functions code
         //Check if the bot is online
         private void Ping()
         {
@@ -93,6 +100,7 @@ namespace Discordbot
                  await e.Channel.SendMessage("```Hiya~ I'm online.```");
             });
         }
+        
         //say hello
         private void Sayhello()
         {
@@ -104,6 +112,7 @@ namespace Discordbot
                 await e.Channel.SendMessage("Hello @everyone I'm @Cypher#1556");
             });
         }
+        
         //Roll a radom number
         private void RefisterRNDGenCommand()
         {
@@ -136,6 +145,8 @@ namespace Discordbot
 
                 });
         }
+
+        //Sends a message when someone joins and leaves the server
         private void WelcomeNLeave()
         {
             //Join
@@ -158,6 +169,7 @@ namespace Discordbot
 
         }
 
+        //Used to mass delete msg
         public void Destroy()
         {
             commands.CreateCommand("Delete")
@@ -193,6 +205,7 @@ namespace Discordbot
                         else
                         {
                             await e.Channel.SendMessage(CONT + "All " + number + " Foe's have been eliminated" + CONT);
+
                         }
                     }
                     catch (Exception ex)
@@ -212,38 +225,69 @@ namespace Discordbot
             });
         }
 
-        //aduiso
+        ///Voice Stuff
+        //Join VC
         private void JoinVC()
         {
             commands.CreateCommand("Join")
-                .Description("Used for Voice [WIP]")
+                .Parameter("Channel",ParameterType.Unparsed)
+                .Description("Used for the bot to join a Voice Channel\nShe will join the defualt channel unless you put a channel name at the end")
                 .Do(async (e) =>
                 {
                     try
                     {
+                        //Connect
+                        bool exactMatch = false;
+                        Channel NULL = null;
+                        var _vClient = audio.Join(NULL);
+
+
                         var server = e.Server.Name;
                         var voiceChannel = discord.FindServers(server).FirstOrDefault().VoiceChannels.FirstOrDefault();
-
-                        await e.Channel.SendMessage("Joining " + voiceChannel + "!");
-                        await discord.GetService<AudioService>()
-                        .Join(voiceChannel);
-                        await e.Channel.SendMessage("Joined " + voiceChannel + "!");
+                        if (!string.IsNullOrEmpty(e.GetArg("Channel")))
+                        {
+                            voiceChannel = discord.FindServers(server).First().FindChannels(e.GetArg("Channel"), ChannelType.Voice,exactMatch).First();
+                            if (exactMatch == true)
+                            {
+                                await e.Channel.SendMessage(voiceChannel + "Isn't a Voice channel on this server!");
+                            }
+                            else
+                            {
+                                await e.Channel.SendMessage(CONT + "Joining " + voiceChannel + "!" + CONT);
+                                _vClient = audio.Join(voiceChannel);
+                                await e.Channel.SendMessage(CONT + "Joined " + voiceChannel + "!" + CONT);
+                            }
+                        }
+                        else
+                        {
+                            await e.Channel.SendMessage(CONT + "Joining " + voiceChannel + "!" + CONT);
+                            _vClient = audio.Join(voiceChannel);
+                            await e.Channel.SendMessage(CONT + "Joined " + voiceChannel + "!" + CONT);
+                        };
                     }
-                    catch(InvalidOperationException)
+                    catch(Exception ex)
                     {
-                        await e.Channel.SendMessage("Well that didn't work?");
+                        if (ex.Message != "The server responded with error 404 (NotFound): \"Unknown Message\"")
+                            await e.Channel.SendMessage(CONT + "Well that didn't work?" + CONT);
                     }
-
-
-                  
-
-
                 });
         }
-        public void SendAudio(string pathOrUrl)
+
+        //Leaves VC
+        private void LeaveVC()
         {
-            
+            commands.CreateCommand("Leave")
+                .Description("Tells the bot to disconect")
+                .Do(async (e) =>
+                {
+                    var server = e.Server.Name;
+
+                    await e.Channel.SendMessage(CONT + "Later~" + CONT);
+                    await audio.Leave(e.Server);
+                });
         }
+
+        
 
         //End
         private void Log(object sender, LogMessageEventArgs e)
